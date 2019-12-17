@@ -40,10 +40,14 @@
           ix = 1+MOD(j-1,nx) ! internal loop
           iz = 1+(j-1)/nx    ! external loop
 
+          !/////////////////////////////////////////
           ! CALCULE MARCHENKO HERE (iz,ix) !
+          !/////////////////////////////////////////
 
           if (ix+nprocs <= nx) cycle
 
+          ! Aqui todos os processos precisam da informação dos outros
+          ! se eles terminaram a profundidade
           lsend(iz)=.TRUE.
           CALL mpi_allgather(lsend,nz,MPI_LOGICAL,&
                              lrecv,nz,MPI_LOGICAL,&
